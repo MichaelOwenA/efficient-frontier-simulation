@@ -37,9 +37,17 @@ The simulation successfully processed the asset basket, identifying a maximum Sh
 ## Mathematical Framework
 Portfolios are evaluated based on these core financial metrics:
 
-* **Expected Portfolio Return ($E(R_p)$):** $$E(R_p) = \sum_{i=1}^{n} w_i E(R_i)$$
-* **Portfolio Volatility ($\sigma_p$):** $$\sigma_p = \sqrt{w^T \Sigma w}$$
-* **Sharpe Ratio:** $$Sharpe = \frac{E(R_p) - R_f}{\sigma_p}$$
+* **Expected Portfolio Return** $E(R_p)$: The weighted sum of expected individual asset returns.
+
+  $$E(R_p) = \sum_{i=1}^{n} w_i E(R_i)$$
+
+* **Portfolio Volatility** $\sigma_p$: The annualized standard deviation of portfolio returns, reflecting historical asset covariances.
+
+  $$\sigma_p = \sqrt{w^T \Sigma w}$$
+
+* **Sharpe Ratio:** The measure of risk-adjusted performance, quantifying excess return per unit of annualized volatility.
+
+  $$Sharpe = \frac{E(R_p) - R_f}{\sigma_p}$$
 
 ---
 
