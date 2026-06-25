@@ -1,59 +1,63 @@
 # Portfolio Optimization: Monte Carlo Simulation
 
 **Author:** Michael Owen A.  
-**Date:** June 2026
+**Date:** June 2026  
 
 ---
 
 ## Overview
-This project implements **Modern Portfolio Theory (MPT)** to optimize asset allocation. By running 500,000 Monte Carlo simulations, the model identifies the optimal weight distribution that maximizes the Sharpe Ratio, visually represented by the Efficient Frontier.
+This repository implements **Modern Portfolio Theory (MPT)** to model and optimize asset allocation using a vectorized Monte Carlo framework. By executing 500,000 simulated portfolio weight permutations, the engine maps out the **Efficient Frontier** and isolates the optimal allocation that maximizes risk-adjusted returns (the Maximum Sharpe Ratio).
+
+The asset universe analyzed includes: `AAPL`, `MSFT`, `GOOG`, `AMZN`, `NVDA`, `AVGO`, and `BRK-B` over a 5-year historical horizon.
 
 ---
 
 ## Simulation Results
-The simulation successfully processed the asset basket, identifying a maximum Sharpe Ratio of **1.2276**.
+
+The model successfully converged to identify an optimal risk-adjusted allocation, plotted below using a clean, modernized Seaborn theme.
 
 ![Efficient Frontier Visualization](efficient_frontier.png)
 
 ### Key Performance Metrics
 | Metric | Value |
 | :--- | :--- |
-| **Risk-Free Rate ($R_f$)** | 4.38% |
-| **Max Sharpe Ratio** | 1.2276 |
-| **Expected Return** | 42.31% |
-| **Portfolio Volatility** | 30.90% |
+| **Risk-Free Rate ($R_f$)** | 4.38% (via `^TNX` Live Ticker) |
+| **Max Sharpe Ratio** | **1.2320** |
+| **Expected Annualized Return** | **39.62%** |
+| **Annualized Portfolio Volatility** | **28.60%** |
 
 ### Optimal Asset Allocation
-* **AVGO**: 39.64%
-* **NVDA**: 26.78%
-* **BRK-B**: 25.83%
-* **GOOG**: 4.68%
-* **MSFT**: 2.10%
-* **AMZN**: 0.91%
-* **AAPL**: 0.06%
+* **AVGO**: 33.17%
+* **BRK-B**: 30.12%
+* **NVDA**: 24.97%
+* **GOOG**: 10.66%
+* **MSFT**: 0.70%
+* **AAPL**: 0.35%
+* **AMZN**: 0.02%
 
 ---
 
 ## Mathematical Framework
-Portfolios are evaluated based on these core financial metrics:
 
-* **Expected Portfolio Return** $E(R_p)$: The weighted sum of expected individual asset returns.
+Portfolios are mathematically evaluated based on standard quantitative finance formulations:
 
+* **Expected Portfolio Return** $E(R_p)$: The inner product of the weight vector and the historical annualized asset returns.
   $$E(R_p) = \sum_{i=1}^{n} w_i E(R_i)$$
 
-* **Portfolio Volatility** $\sigma_p$: The annualized standard deviation of portfolio returns, reflecting historical asset covariances.
+* **Portfolio Volatility** $\sigma_p$: Computed using the covariance matrix $\Sigma$ to capture inter-asset dynamics, annualized over a 252-day trading year.
+  $$\sigma_p = \sqrt{w^T \Sigma w} \times \sqrt{252}$$
 
-  $$\sigma_p = \sqrt{w^T \Sigma w}$$
-
-* **Sharpe Ratio:** The measure of risk-adjusted performance, quantifying excess return per unit of annualized volatility.
-
-  $$Sharpe = \frac{E(R_p) - R_f}{\sigma_p}$$
+* **Sharpe Ratio:** Evaluates the premium earned per unit of total risk over the risk-free rate benchmark.
+  $$\text{Sharpe Ratio} = \frac{E(R_p) - R_f}{\sigma_p}$$
 
 ---
 
 ## Instructions for Execution
 
 ### 1. Prerequisites
-Ensure you have the following dependencies installed:
-```bash
-pip install yfinance numpy pandas matplotlib
+Ensure you have the required stack installed via pip:
+`pip install yfinance numpy pandas matplotlib seaborn`
+
+### 2. Running the Script
+The script dynamically pulls live historical close prices from the Yahoo Finance API, auto-fetches the current 10-year Treasury yield for the risk-free rate, runs the vectorized simulation, and exports the high-resolution visualization:
+`python portfolio_optimization.py`
